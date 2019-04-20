@@ -1,7 +1,6 @@
 /*
  * mylist.c
  *
- *  Created on: 7 Kas 2018
  *      Author: aytac.macit
  */
 
@@ -12,7 +11,7 @@
 
 
 /*------------------------------------------------------------------------------------------
- @brief  : Güncel linked list durumunu ekrana yazdýrýr.
+ @brief  : GÃ¼ncel linked list durumunu ekrana yazdÃ½rÃ½r.
  @param  : root
  @return :
 ------------------------------------------------------------------------------------------
@@ -27,19 +26,19 @@ void print_n(node *r){
 }
 
 /*------------------------------------------------------------------------------------------
- @brief  : Düðüm yaratma, birleþtirme ve geniþletme iþlerini yapar.
- @param  : Düðüm baþlangýç adresi,
- @return : node* tipinde güncel list, baþlangýç adresi, offset
+ @brief  : DÃ¼Ã°Ã¼m yaratma, birleÃ¾tirme ve geniÃ¾letme iÃ¾lerini yapar.
+ @param  : DÃ¼Ã°Ã¼m baÃ¾langÃ½Ã§ adresi,
+ @return : node* tipinde gÃ¼ncel list, baÃ¾langÃ½Ã§ adresi, offset
 ------------------------------------------------------------------------------------------
 */
 
 node* addsort_n(node *r, int start, int offset) {
 
-	if(start+offset > maxMemorySize || start < minMemorySize) { // max ve min bellek alanlarýnýn dýþýnda ise, yer tahsis etme.
+	if(start+offset > maxMemorySize || start < minMemorySize) { // max ve min bellek alanlarÃ½nÃ½n dÃ½Ã¾Ã½nda ise, yer tahsis etme.
 		return r;
 	}
 
-	if(r==NULL) {// linklist boþsa, root ekle
+	if(r==NULL) {// linklist boÃ¾sa, root ekle
 		r=(node*)malloc(sizeof(node));
 		r->next=NULL;
 		r->startAddr=start;
@@ -48,23 +47,23 @@ node* addsort_n(node *r, int start, int offset) {
 		return r;
 	}
 
-	if(r->startAddr <= start && r->finishAddr >= start+offset) { // root ta kullanýlan bir alan alýnmaya çalýþýldýðýnda. Örnek : 0-10 arasý kullanýlýyor, 5-8 arasý alýnmak isteniyor.
+	if(r->startAddr <= start && r->finishAddr >= start+offset) { // root ta kullanÃ½lan bir alan alÃ½nmaya Ã§alÃ½Ã¾Ã½ldÃ½Ã°Ã½nda. Ã–rnek : 0-10 arasÃ½ kullanÃ½lÃ½yor, 5-8 arasÃ½ alÃ½nmak isteniyor.
 
 		return r;
 	}
 
-	if(r->startAddr <= start && r->finishAddr > start && r->finishAddr<start+offset && (r->next->startAddr>start+offset || r->next == NULL)) { // root alaný geniþletilmek isteniyorsa
+	if(r->startAddr <= start && r->finishAddr > start && r->finishAddr<start+offset && (r->next->startAddr>start+offset || r->next == NULL)) { // root alanÃ½ geniÃ¾letilmek isteniyorsa
 		r->finishAddr=start+offset;
 
 		return r;
 	}
-	if(r->startAddr > start && r->finishAddr >= start+offset && r->startAddr <= start+offset) { // root alaný geniþletilmek isteniyorsa
+	if(r->startAddr > start && r->finishAddr >= start+offset && r->startAddr <= start+offset) { // root alanÃ½ geniÃ¾letilmek isteniyorsa
 		r->startAddr=start;
 
 		return r;
 	}
 
-	if(r->startAddr > start && r->startAddr>start+offset) { // girilen startAddr(start) node daki startAddrdan daha büyükse, root deðiþecektir.
+	if(r->startAddr > start && r->startAddr>start+offset) { // girilen startAddr(start) node daki startAddrdan daha bÃ¼yÃ¼kse, root deÃ°iÃ¾ecektir.
 		node * temp;
 		temp=(node*)malloc(sizeof(node));
 		temp->startAddr=start;
@@ -74,7 +73,7 @@ node* addsort_n(node *r, int start, int offset) {
 		return temp;
 	}
 
-	if(r->startAddr > start && r->finishAddr < start+offset && (r->next->startAddr>start+offset || r->next == NULL)) { // root alaný geniþletilmek isteniyorsa
+	if(r->startAddr > start && r->finishAddr < start+offset && (r->next->startAddr>start+offset || r->next == NULL)) { // root alanÃ½ geniÃ¾letilmek isteniyorsa
 		r->finishAddr=start+offset;
 		r->startAddr=start;
 
@@ -82,7 +81,7 @@ node* addsort_n(node *r, int start, int offset) {
 	}
 
 	node*iter=r;
-	while(iter->next!=NULL && iter->next->startAddr < start) { // nodelar arasý tek yönlü gezinme
+	while(iter->next!=NULL && iter->next->startAddr < start) { // nodelar arasÃ½ tek yÃ¶nlÃ¼ gezinme
 		iter=iter->next;
 	}
 	if(iter->startAddr <= start && iter->finishAddr >= start+offset) {
@@ -93,22 +92,22 @@ node* addsort_n(node *r, int start, int offset) {
 		return r;
 	}
 
-	if(start > iter->startAddr && start <= iter->finishAddr && (start+offset < iter->next->startAddr || iter->next==NULL )) { // node bitiþ güncelleme
+	if(start > iter->startAddr && start <= iter->finishAddr && (start+offset < iter->next->startAddr || iter->next==NULL )) { // node bitiÃ¾ gÃ¼ncelleme
 		iter->finishAddr=start+offset;
 
 		return r;
 	}
 
-	if(start < iter->next->startAddr && (start > iter->finishAddr) && (start+offset >= iter->next->startAddr && start+offset <= iter->next->finishAddr || iter->next==NULL )) { // node baþlangýç güncelleme
+	if(start < iter->next->startAddr && (start > iter->finishAddr) && (start+offset >= iter->next->startAddr && start+offset <= iter->next->finishAddr || iter->next==NULL )) { // node baÃ¾langÃ½Ã§ gÃ¼ncelleme
 		iter->next->startAddr=start;
 
 		return r;
 	}
 
 
-	if((iter->next->startAddr >= start ) && (iter->next->finishAddr < start+offset) && (iter->finishAddr < start)) { // node baþlangýç ve bitiþ geniþletme
+	if((iter->next->startAddr >= start ) && (iter->next->finishAddr < start+offset) && (iter->finishAddr < start)) { // node baÃ¾langÃ½Ã§ ve bitiÃ¾ geniÃ¾letme
 
-		if( iter->next->next->startAddr < start+offset && iter->next->next != NULL) { // diðer node ile birleþiyorsa ise ;  düðüm birleþtir.
+		if( iter->next->next->startAddr < start+offset && iter->next->next != NULL) { // diÃ°er node ile birleÃ¾iyorsa ise ;  dÃ¼Ã°Ã¼m birleÃ¾tir.
 
 			iter->next->next->startAddr=start;
 			node *temp;
@@ -117,7 +116,7 @@ node* addsort_n(node *r, int start, int offset) {
 			free(temp);
 
 		}
-		else { // yalnýzca ilgili node geniþletilmek isteniyorsa
+		else { // yalnÃ½zca ilgili node geniÃ¾letilmek isteniyorsa
 			iter->next->startAddr=start;
 			iter->next->finishAddr=start+offset;
 		}
@@ -125,7 +124,7 @@ node* addsort_n(node *r, int start, int offset) {
 		return r;
 	}
 
-	if(start <= iter->finishAddr && (start+offset >= iter->next->startAddr)) { // iki nodeyi birleþtirme
+	if(start <= iter->finishAddr && (start+offset >= iter->next->startAddr)) { // iki nodeyi birleÃ¾tirme
 		if(start+offset > iter->next->finishAddr)
 			iter->finishAddr=start+offset;
 		else
@@ -140,7 +139,7 @@ node* addsort_n(node *r, int start, int offset) {
 	}
 
 
-		node* temp=(node*)malloc(sizeof(node)); // yeni node oluþturma
+		node* temp=(node*)malloc(sizeof(node)); // yeni node oluÃ¾turma
 		temp->next=iter->next;
 		iter->next=temp;
 		temp->startAddr=start;
@@ -150,22 +149,22 @@ node* addsort_n(node *r, int start, int offset) {
 
 }
 /*------------------------------------------------------------------------------------------
- @brief  : Kullanýlan düðümün baþlangýç adresi girildiðinde, yalnýzca o düðümü siler.
- @param  : root, düðüm baþlangýç adresi
+ @brief  : KullanÃ½lan dÃ¼Ã°Ã¼mÃ¼n baÃ¾langÃ½Ã§ adresi girildiÃ°inde, yalnÃ½zca o dÃ¼Ã°Ã¼mÃ¼ siler.
+ @param  : root, dÃ¼Ã°Ã¼m baÃ¾langÃ½Ã§ adresi
  @return : node* tipinde root
 ------------------------------------------------------------------------------------------
 */
 node* delete_n(node *r, int start)  {
 	node *temp;
 	node *iter=r;
-	if(r->startAddr==start) { // linklist baþý silinmek istiniyorsa ;
+	if(r->startAddr==start) { // linklist baÃ¾Ã½ silinmek istiniyorsa ;
 		temp=r;
 		r=r->next;
 		free(temp);
 
 		return r;
 	}
-	while(iter->next!=NULL && iter->next->startAddr!=start) {//  istenilen düðüm bulunana kadar, listeyi ilerlet
+	while(iter->next!=NULL && iter->next->startAddr!=start) {//  istenilen dÃ¼Ã°Ã¼m bulunana kadar, listeyi ilerlet
 		iter=iter->next;
 	}
 	if(iter->next==NULL) {
@@ -180,8 +179,8 @@ node* delete_n(node *r, int start)  {
 	return r;
 }
 /*------------------------------------------------------------------------------------------
- @brief  : Hafýzada en uygun boþ alandan offset kadar yer tahsis eder.
- @param  : root, offset( tahsis edilecek boþ alan boyutu)
+ @brief  : HafÃ½zada en uygun boÃ¾ alandan offset kadar yer tahsis eder.
+ @param  : root, offset( tahsis edilecek boÃ¾ alan boyutu)
  @return : node* tipinde root
 ------------------------------------------------------------------------------------------
 */
@@ -194,27 +193,27 @@ node* add_undirected(node *r, int offset) {
 	int b[i], k=0;
 
 
-	while(iter_r->next!=NULL) { // i : dolu alan node sayýsý
+	while(iter_r->next!=NULL) { // i : dolu alan node sayÃ½sÃ½
 		iter_r=iter_r->next;
 		++i;
 	}
 
-//------------root minvalue baþlamayýp,liste maxvalue ile bitmiyorsa-------------//
+//------------root minvalue baÃ¾lamayÃ½p,liste maxvalue ile bitmiyorsa-------------//
 	if(iter->startAddr != minMemorySize && maxMemorySize != iter_r->finishAddr ) {
-		b[0]=(iter->startAddr-minMemorySize); // root node ile ram baþlangýcý arasýnda boþ alan
+		b[0]=(iter->startAddr-minMemorySize); // root node ile ram baÃ¾langÃ½cÃ½ arasÃ½nda boÃ¾ alan
 
 	while(iter->next!=NULL && k < i) {
 		b[k+1]=(iter->next->startAddr - iter->finishAddr);
 		iter=iter->next;
 		k++;
 	}
-	b[k+1]=(maxMemorySize-iter->finishAddr); // son node ile ram sonu arasýndaki boþ alan
+	b[k+1]=(maxMemorySize-iter->finishAddr); // son node ile ram sonu arasÃ½ndaki boÃ¾ alan
 	step=1;
-	for(k=0;k<i+1;k++)   //i+1 : boþ alan node sayýsý
+	for(k=0;k<i+1;k++)   //i+1 : boÃ¾ alan node sayÃ½sÃ½
 		printf("k : %d buffer  %d \n",k, b[k]);
 	}
 
-//------------root minvalue ile baþlayýp,liste max value ile bitmiyorsa----------//
+//------------root minvalue ile baÃ¾layÃ½p,liste max value ile bitmiyorsa----------//
 	if(iter->startAddr == minMemorySize && maxMemorySize != iter_r->finishAddr ) {
 
 	while(iter->next != NULL && k < i) {
@@ -222,16 +221,16 @@ node* add_undirected(node *r, int offset) {
 		iter=iter->next;
 		k++;
 	}
-	b[k]=(maxMemorySize-iter->finishAddr); // son node ile ram sonu arasýndaki boþ alan
+	b[k]=(maxMemorySize-iter->finishAddr); // son node ile ram sonu arasÃ½ndaki boÃ¾ alan
 	step=2;
 
 	for(k=0;k<i;k++)
 		printf(" k : %d buffer  %d \n",k, b[k]);
 	}
 
-//-----------root minvalue ile baþlamayýp, liste maxvalue ile bitiyorsa----------//
+//-----------root minvalue ile baÃ¾lamayÃ½p, liste maxvalue ile bitiyorsa----------//
 	if(iter->startAddr != minMemorySize && maxMemorySize == iter_r->finishAddr ) {
-		b[0]=(iter->startAddr-minMemorySize); // root node ile ram baþlangýcý arasýnda boþ alan
+		b[0]=(iter->startAddr-minMemorySize); // root node ile ram baÃ¾langÃ½cÃ½ arasÃ½nda boÃ¾ alan
 
 	while(iter->next != NULL && k < i) {
 		b[k+1]=(iter->next->startAddr - iter->finishAddr);
@@ -240,11 +239,11 @@ node* add_undirected(node *r, int offset) {
 	}
 	step=3;
 
-	for(k=0;k<i;k++)   //i+1 : boþ alan node sayýsý
+	for(k=0;k<i;k++)   //i+1 : boÃ¾ alan node sayÃ½sÃ½
 		printf(" k : %d buffer  %d \n",k, b[k]);
 	}
 
-//----------root minvalue ile baþlayýp, liste maxvalue ile bitiyorsa---------------//
+//----------root minvalue ile baÃ¾layÃ½p, liste maxvalue ile bitiyorsa---------------//
 	if(iter->startAddr == minMemorySize && maxMemorySize == iter_r->finishAddr ) {
 	while(iter->next != NULL && k < i) {
 		b[k]=(iter->next->startAddr - iter->finishAddr);
@@ -253,7 +252,7 @@ node* add_undirected(node *r, int offset) {
 	}
 	step=4;
 
-	for(k=0;k<i-1;k++)   //i-1 : boþ alan node sayýsý
+	for(k=0;k<i-1;k++)   //i-1 : boÃ¾ alan node sayÃ½sÃ½
 		printf(" k : %d  buffer  %d \n",k, b[k]);
 	}
 
@@ -269,16 +268,16 @@ node* add_undirected(node *r, int offset) {
 	int result[k];
 	node *z;
 	switch(step) {
-		case 1:// liste min ve max deðerleri ile baþlayýp bitmiyorsa...
+		case 1:// liste min ve max deÃ°erleri ile baÃ¾layÃ½p bitmiyorsa...
 			for(x=0; x<k; x++) {
 				result[x]=b[index[x]];
 				if(offset<=result[x]) {
-					if(index[x]==0) {  // root öncesi yer tahsisi
-						if(offset==r->startAddr) { // offset deðeri , root start adresine eþitse
+					if(index[x]==0) {  // root Ã¶ncesi yer tahsisi
+						if(offset==r->startAddr) { // offset deÃ°eri , root start adresine eÃ¾itse
 							r->startAddr=0;
 							return r;
 						}
-						else { // offset deðeri, root start adresine eþit deðilse root deðiþecektir.
+						else { // offset deÃ°eri, root start adresine eÃ¾it deÃ°ilse root deÃ°iÃ¾ecektir.
 							node * temp;
 							temp=(node*)malloc(sizeof(node));
 							temp->startAddr=0;
@@ -287,9 +286,9 @@ node* add_undirected(node *r, int offset) {
 							return temp;
 						}
 					}
-					else { // root sonrasý yer tahsisi
+					else { // root sonrasÃ½ yer tahsisi
 						z=r;
-						while(--index[x]){ // root öncesi boþluktan dolayý
+						while(--index[x]){ // root Ã¶ncesi boÃ¾luktan dolayÃ½
 							z=z->next;
 						}
 						if(offset==result[x]) {
@@ -313,7 +312,7 @@ node* add_undirected(node *r, int offset) {
 				}
 			}
 			break;
-		case 2: // liste baþý min ile baþlayýp, max ile bitmiyorsa..
+		case 2: // liste baÃ¾Ã½ min ile baÃ¾layÃ½p, max ile bitmiyorsa..
 			for(x=0; x<k; x++) {
 				result[x]=b[index[x]];
 				if(offset<=result[x]) {
@@ -340,16 +339,16 @@ node* add_undirected(node *r, int offset) {
 				}
 			}
 			break;
-		case 3: // liste baþý boþluk var, sonu yok.
+		case 3: // liste baÃ¾Ã½ boÃ¾luk var, sonu yok.
 			for(x=0; x<k; x++) {
 							result[x]=b[index[x]];
 							if(offset<=result[x]) {
-								if(index[x]==0) {  // root öncesi yer tahsisi
-									if(offset==r->startAddr) { // offset deðeri , root start adresine eþitse
+								if(index[x]==0) {  // root Ã¶ncesi yer tahsisi
+									if(offset==r->startAddr) { // offset deÃ°eri , root start adresine eÃ¾itse
 										r->startAddr=0;
 										return r;
 									}
-									else { // offset deðeri, root start adresine eþit deðilse root deðiþecektir.
+									else { // offset deÃ°eri, root start adresine eÃ¾it deÃ°ilse root deÃ°iÃ¾ecektir.
 										node * temp;
 										temp=(node*)malloc(sizeof(node));
 										temp->startAddr=0;
@@ -358,9 +357,9 @@ node* add_undirected(node *r, int offset) {
 										return temp;
 									}
 								}
-								else { // root sonrasý yer tahsisi
+								else { // root sonrasÃ½ yer tahsisi
 									z=r;
-									while(--index[x]){ // root öncesi boþluktan dolayý
+									while(--index[x]){ // root Ã¶ncesi boÃ¾luktan dolayÃ½
 										z=z->next;
 									}
 									if(offset==result[x]) {
@@ -382,7 +381,7 @@ node* add_undirected(node *r, int offset) {
 
 						}
 			break;
-		case 4:// Liste baþý min baþlýyor, liste sonu max ile bitiyorsa
+		case 4:// Liste baÃ¾Ã½ min baÃ¾lÃ½yor, liste sonu max ile bitiyorsa
 			for(x=0; x<k; x++) {
 				result[x]=b[index[x]];
 				if(offset<=result[x]) {
@@ -412,8 +411,8 @@ node* add_undirected(node *r, int offset) {
 
 }
 /*------------------------------------------------------------------------------------------
- @brief  : qsort(); için compare fonksiyonu
- @param  : const void*a, const void *b : karþýlaþtýrýlacak deðerler
+ @brief  : qsort(); iÃ§in compare fonksiyonu
+ @param  : const void*a, const void *b : karÃ¾Ã½laÃ¾tÃ½rÃ½lacak deÃ°erler
  @return : int
 ------------------------------------------------------------------------------------------
 */
@@ -425,19 +424,19 @@ int cmp(const void *a, const void *b)  {
 }
 
 /*------------------------------------------------------------------------------------------
- @brief  : Kullanýlan düðümün baþlangýç adresi girildiðinde, yalnýzca o düðümü siler.
- @param  : Düðüm baþlangýç adresi
+ @brief  : KullanÃ½lan dÃ¼Ã°Ã¼mÃ¼n baÃ¾langÃ½Ã§ adresi girildiÃ°inde, yalnÃ½zca o dÃ¼Ã°Ã¼mÃ¼ siler.
+ @param  : DÃ¼Ã°Ã¼m baÃ¾langÃ½Ã§ adresi
  @return : node* tipinde root
 ------------------------------------------------------------------------------------------
 */
 
 node* freefunc(node *r , int start, int offset) {
 
-	if(start > maxMemorySize || start < minMemorySize) { // max ve min bellek alanlarýnýn dýþýnda ise, yer tahsis etme.
+	if(start > maxMemorySize || start < minMemorySize) { // max ve min bellek alanlarÃ½nÃ½n dÃ½Ã¾Ã½nda ise, yer tahsis etme.
 
 		return r;
 	}
-	if(r==NULL) {// linklist boþsa
+	if(r==NULL) {// linklist boÃ¾sa
 		return r;
 	}
 
@@ -446,7 +445,7 @@ node* freefunc(node *r , int start, int offset) {
 	}
 
 
-	if(r->startAddr < start && r->finishAddr > start+offset) { // root ta kullanýlan bir alan boþaltýlmaya çalýþýldýðýnda. Örnek : 0-10 arasý kullanýlýyor, 5-8 arasý boþaltýlmak isteniyor.
+	if(r->startAddr < start && r->finishAddr > start+offset) { // root ta kullanÃ½lan bir alan boÃ¾altÃ½lmaya Ã§alÃ½Ã¾Ã½ldÃ½Ã°Ã½nda. Ã–rnek : 0-10 arasÃ½ kullanÃ½lÃ½yor, 5-8 arasÃ½ boÃ¾altÃ½lmak isteniyor.
 
 		node *temp;
 		temp=(node*)malloc(sizeof(node));
@@ -459,7 +458,7 @@ node* freefunc(node *r , int start, int offset) {
 		return r;
 	}
 
-	if(r->startAddr >= start && r->finishAddr <= start+offset && r->next->startAddr > start+offset) { // root alaný tamamen silinmek isteniyorsa
+	if(r->startAddr >= start && r->finishAddr <= start+offset && r->next->startAddr > start+offset) { // root alanÃ½ tamamen silinmek isteniyorsa
 		node*temp;
 		temp=r->next;
 		free(r);
@@ -467,7 +466,7 @@ node* freefunc(node *r , int start, int offset) {
 		return temp;
 	}
 
-	if(r->startAddr >= start && r->finishAddr <= start+offset && r->next->finishAddr <= start+offset ) { // root alaný tamamen silinmek isteniyorsa
+	if(r->startAddr >= start && r->finishAddr <= start+offset && r->next->finishAddr <= start+offset ) { // root alanÃ½ tamamen silinmek isteniyorsa
 		node * temp1;
 		node* temp2;
 		temp1=r;
@@ -479,19 +478,19 @@ node* freefunc(node *r , int start, int offset) {
 		return r;
 	}
 
-	if(r->startAddr >= start && r->finishAddr > start+offset) { // root alaný baþlangýç adresi deðiþtirme
+	if(r->startAddr >= start && r->finishAddr > start+offset) { // root alanÃ½ baÃ¾langÃ½Ã§ adresi deÃ°iÃ¾tirme
 		r->startAddr=start+offset;
 
 		return r;
 	}
 
-	if(r->startAddr < start && r->finishAddr>start && r->finishAddr < start+offset && r->next->startAddr > start+offset ) { // root alaný bitiþ adresi azaltma
+	if(r->startAddr < start && r->finishAddr>start && r->finishAddr < start+offset && r->next->startAddr > start+offset ) { // root alanÃ½ bitiÃ¾ adresi azaltma
 		r->finishAddr=start;
 
 		return r;
 	}
 
-	if(start <= r->startAddr && start+offset >= r->finishAddr && (start+offset > r->next->startAddr && start+offset < r->next->finishAddr ||r->next==NULL)) { // node silme VE baþlangýç azaltma
+	if(start <= r->startAddr && start+offset >= r->finishAddr && (start+offset > r->next->startAddr && start+offset < r->next->finishAddr ||r->next==NULL)) { // node silme VE baÃ¾langÃ½Ã§ azaltma
 		node*temp;
 		temp=r->next;
 		temp->startAddr=start+offset;
@@ -501,13 +500,13 @@ node* freefunc(node *r , int start, int offset) {
 	}
 
 	node*iter=r;
-	while(iter->next!=NULL && iter->next->startAddr < start) { // nodelar arasý tek yönlü gezinme
+	while(iter->next!=NULL && iter->next->startAddr < start) { // nodelar arasÃ½ tek yÃ¶nlÃ¼ gezinme
 		iter=iter->next;
 	}
 
 
 
-	if(iter->startAddr < start && iter->finishAddr > start+offset) { //  kullanýlan bir alan boþaltýlmaya çalýþýldýðýnda. Örnek : 0-10 arasý kullanýlýyor, 5-8 arasý boþaltýlmak isteniyor.
+	if(iter->startAddr < start && iter->finishAddr > start+offset) { //  kullanÃ½lan bir alan boÃ¾altÃ½lmaya Ã§alÃ½Ã¾Ã½ldÃ½Ã°Ã½nda. Ã–rnek : 0-10 arasÃ½ kullanÃ½lÃ½yor, 5-8 arasÃ½ boÃ¾altÃ½lmak isteniyor.
 
 		node *temp;
 		temp=(node*)malloc(sizeof(node));
@@ -525,7 +524,7 @@ node* freefunc(node *r , int start, int offset) {
 		return r;
 	}
 
-	if(start > iter->startAddr && start <= iter->finishAddr  && (start+offset < iter->next->startAddr || iter->next==NULL )) { // node bitiþ azaltma
+	if(start > iter->startAddr && start <= iter->finishAddr  && (start+offset < iter->next->startAddr || iter->next==NULL )) { // node bitiÃ¾ azaltma
 		iter->finishAddr=start;
 
 		return r;
@@ -533,7 +532,7 @@ node* freefunc(node *r , int start, int offset) {
 
 
 
-	if(start <= iter->next->startAddr && (start > iter->finishAddr) && start+offset >= iter->next->startAddr && (start+offset < iter->next->finishAddr || iter->next==NULL )) { // node baþlangýç azaltma
+	if(start <= iter->next->startAddr && (start > iter->finishAddr) && start+offset >= iter->next->startAddr && (start+offset < iter->next->finishAddr || iter->next==NULL )) { // node baÃ¾langÃ½Ã§ azaltma
 		iter->next->startAddr=start+offset;
 
 		return r;
@@ -548,7 +547,7 @@ node* freefunc(node *r , int start, int offset) {
 		return r;
 	}
 
-	if(start <= iter->next->startAddr && start+offset >= iter->next->finishAddr && start > iter->finishAddr && (start+offset > iter->next->next->startAddr && start+offset < iter->next->next->finishAddr ||iter->next==NULL)) { // node silme VE baþlangýç azaltma
+	if(start <= iter->next->startAddr && start+offset >= iter->next->finishAddr && start > iter->finishAddr && (start+offset > iter->next->next->startAddr && start+offset < iter->next->next->finishAddr ||iter->next==NULL)) { // node silme VE baÃ¾langÃ½Ã§ azaltma
 		node * temp;
 		temp=iter->next;
 		iter->next->next->startAddr=start+offset;
@@ -558,14 +557,14 @@ node* freefunc(node *r , int start, int offset) {
 	  return r;
 	}
 
-	if(start > iter->startAddr && start <= iter->finishAddr  && ((start+offset > iter->next->startAddr &&  start+offset < iter->next->finishAddr)||( iter->next==NULL ))) { // node bitiþ azaltma
+	if(start > iter->startAddr && start <= iter->finishAddr  && ((start+offset > iter->next->startAddr &&  start+offset < iter->next->finishAddr)||( iter->next==NULL ))) { // node bitiÃ¾ azaltma
 		iter->finishAddr=start;
 		iter->next->startAddr=start+offset;
 
 		return r;
 	}
 
-	if(start > iter->startAddr && start <= iter->finishAddr  && ((start+offset > iter->next->startAddr &&  start+offset >= iter->next->finishAddr)||( iter->next==NULL ))) { // node bitiþ azaltma
+	if(start > iter->startAddr && start <= iter->finishAddr  && ((start+offset > iter->next->startAddr &&  start+offset >= iter->next->finishAddr)||( iter->next==NULL ))) { // node bitiÃ¾ azaltma
 		node * temp;
 		iter->finishAddr=start;
 		temp=iter->next;
