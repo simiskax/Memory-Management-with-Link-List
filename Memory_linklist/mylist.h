@@ -1,7 +1,6 @@
 /*
  * mylist.h
  *
- *  Created on: 7 Kas 2018
  *      Author: aytac.macit
  */
 
